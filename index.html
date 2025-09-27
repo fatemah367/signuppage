@@ -3,12 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title data-translate="signup_title">Create Your Secure Account</title>
-  <script src="js/translations.js"></script>
-  <script src="js/translate.js"></script>
+  <title>Create Your Secure Account</title>
   <style>
-    /* Your existing CSS from account.html */
-    * { margin: 0; padding: 0; box-sizing: border-box; }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background: #f3e8ff;
@@ -18,6 +20,7 @@
       min-height: 100vh;
       color: #4c1d95;
     }
+
     .container {
       background: #fff;
       padding: 40px 30px;
@@ -27,10 +30,12 @@
       max-width: 420px;
       animation: fadeIn 0.7s ease-in-out;
     }
+
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
     h1 {
       font-size: 24px;
       font-weight: bold;
@@ -38,18 +43,21 @@
       text-align: center;
       margin-bottom: 8px;
     }
+
     p {
       color: #666;
       font-size: 14px;
       text-align: center;
       margin-bottom: 20px;
     }
+
     label {
       display: block;
       font-weight: 600;
       color: #6d28d9;
       margin: 10px 0 5px;
     }
+
     input {
       width: 100%;
       padding: 12px;
@@ -59,16 +67,19 @@
       margin-bottom: 16px;
       transition: 0.3s ease;
     }
+
     input:focus {
       border-color: #9333ea;
       box-shadow: 0 0 6px rgba(147, 51, 234, 0.4);
       outline: none;
     }
+
     .btn-container {
       display: flex;
       justify-content: space-between;
       margin-top: 10px;
     }
+
     button {
       padding: 12px 20px;
       border: none;
@@ -77,22 +88,26 @@
       cursor: pointer;
       transition: all 0.3s ease;
     }
+
     .btn-primary {
       background: #9333ea;
       color: #fff;
       flex: 1;
       margin-left: 8px;
     }
+
     .btn-primary:hover {
       background: #7e22ce;
       transform: scale(1.05);
     }
+
     .btn-secondary {
       background: #e9d5ff;
       color: #4c1d95;
       flex: 1;
       margin-right: 8px;
     }
+
     .btn-secondary:hover {
       background: #d8b4fe;
       transform: scale(1.05);
@@ -101,57 +116,78 @@
 </head>
 <body>
   <div class="container">
-    <h1 data-translate="signup_title">Create Your Secure Account</h1>
-    <p data-translate="signup_subtitle">Simple sign-up for reliable data backup and restoration.</p>
+    <h1>Create Your Secure Account</h1>
+    <p>Simple sign-up for reliable data backup and restoration.</p>
+
     <form id="signupForm">
-      <label for="firstName" data-translate="signup_firstname_label">First Name</label>
-      <input type="text" id="firstName" placeholder="Enter first name" data-translate-placeholder="signup_firstname_placeholder" required>
-      <label for="lastName" data-translate="signup_lastname_label">Last Name</label>
-      <input type="text" id="lastName" placeholder="Enter last name" data-translate-placeholder="signup_lastname_placeholder" required>
-      <label for="email" data-translate="signup_email_label">E-mail</label>
-      <input type="email" id="email" placeholder="Enter your email" data-translate-placeholder="signup_email_placeholder" required>
-      <label for="confirmEmail" data-translate="signup_confirm_email_label">Confirm E-mail</label>
-      <input type="email" id="confirmEmail" placeholder="Re-enter your email" data-translate-placeholder="signup_confirm_email_placeholder" required>
-      <label for="password" data-translate="signup_password_label">Password</label>
-      <input type="password" id="password" placeholder="Enter your password" data-translate-placeholder="signup_password_placeholder" required>
-      <label for="confirmPassword" data-translate="signup_confirm_password_label">Confirm Password</label>
-      <input type="password" id="confirmPassword" placeholder="Re-enter your password" data-translate-placeholder="signup_confirm_password_placeholder" required>
+      <label for="firstName">First Name</label>
+      <input type="text" id="firstName" placeholder="Enter first name" required>
+
+      <label for="lastName">Last Name</label>
+      <input type="text" id="lastName" placeholder="Enter last name" required>
+
+      <label for="email">E-mail</label>
+      <input type="email" id="email" placeholder="Enter your email" required>
+
+      <label for="confirmEmail">Confirm E-mail</label>
+      <input type="email" id="confirmEmail" placeholder="Re-enter your email" required>
+
+      <!-- NEW PASSWORD SECTION -->
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter your password" required>
+
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" id="confirmPassword" placeholder="Re-enter your password" required>
+      <!-- END PASSWORD SECTION -->
+
       <div class="btn-container">
-        <button type="button" class="btn-secondary" data-translate="signup_clear_button" onclick="clearForm()">Clear</button>
-        <button type="submit" class="btn-primary" data-translate="signup_submit_button">Get Started</button>
+        <button type="button" class="btn-secondary" onclick="clearForm()">Clear</button>
+        <button type="submit" class="btn-primary">Get Started</button>
       </div>
     </form>
   </div>
+
   <script>
     const form = document.getElementById("signupForm");
+
     form.addEventListener("submit", function (event) {
       event.preventDefault();
+
       const firstName = document.getElementById("firstName").value.trim();
       const lastName = document.getElementById("lastName").value.trim();
       const email = document.getElementById("email").value.trim();
       const confirmEmail = document.getElementById("confirmEmail").value.trim();
       const password = document.getElementById("password").value.trim();
       const confirmPassword = document.getElementById("confirmPassword").value.trim();
-      const lang = localStorage.getItem('selectedLanguage') || 'en';
+
+      // Check email match
       if (email !== confirmEmail) {
-        alert(translations[lang].signup_email_mismatch);
+        alert("❌ Email and confirm email do not match!");
         return;
       }
+
+      // Check password length
       if (password.length < 6) {
-        alert(translations[lang].signup_password_short);
+        alert("⚠ Password must be at least 6 characters!");
         return;
       }
+
+      // Check password match
       if (password !== confirmPassword) {
-        alert(translations[lang].signup_password_mismatch);
+        alert("❌ Password and confirm password do not match!");
         return;
       }
+
+      // Save data to localStorage
       localStorage.setItem("userFirstName", firstName);
       localStorage.setItem("userLastName", lastName);
       localStorage.setItem("userEmail", email);
       localStorage.setItem("userPassword", password);
-      alert(translations[lang].signup_success);
-      window.location.href = "https://username.github.io/settings-repo/"; // Replace with your settings repo URL
+
+      alert("✅ Account created successfully!");
+      window.location.href = "settings.html"; // Redirect to settings page
     });
+
     function clearForm() {
       document.getElementById("firstName").value = "";
       document.getElementById("lastName").value = "";
